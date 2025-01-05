@@ -1,0 +1,9 @@
+database:
+  mongodb:
+    host: "mongodb_url"
+    db_name: "input_doc_db"
+  
+openai:
+  api_key: $OPENAI_API_KEY
+  embedding_model: "text-embedding-3-large"
+  extraction_model: "gpt-4o"

@@ -1,0 +1,9 @@
+openai==1.56.0
+PyMuPDF
+envyaml==1.10.211231
+psycopg2_binary==2.9.10
+pydantic
+pymongo==4.10.1
+python-dotenv==1.0.1
+weave==0.51.19
+gradio
