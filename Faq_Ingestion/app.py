@@ -4,7 +4,7 @@ import openai
 from openai import OpenAI
 from pymongo import MongoClient
 from pymongo.operations import SearchIndexModel
-# import weave
+
 import re
 import os
 import logging
@@ -17,7 +17,7 @@ load_dotenv("./.env.shared")
 from envyaml import EnvYAML
 import gradio as gr
 
-# weave.init("faq_tool")
+
 config = EnvYAML("./config.yaml")
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -124,7 +124,7 @@ class DataExtraction:
             else:
                 raise Exception("MongoClient: Connection Error")
 
-    # @weave.op()
+    
     def __create_index(self,) -> None:
         vectordb_index_status = [index['name'] for index in self.collection.list_search_indexes() 
                                  if index['name'] in ['semantic-search','keyword-search']]
@@ -137,7 +137,7 @@ class DataExtraction:
         if len(indexes) > 0:
             self.collection.create_search_indexes(models=indexes)
             
-    # @weave.op()
+    
     def __data_extraction(self,data: str):
         logger.debug("Starting data extraction process")
         try:
@@ -195,7 +195,7 @@ class DataExtraction:
 
         return aux_output
 
-    # @weave.op()
+    
     @staticmethod
     def create_embeddings(model: str, client_openai, document: str, dimension: int = 3072):
         try:
@@ -211,7 +211,7 @@ class DataExtraction:
         except openai.APITimeoutError as e:
             return openai.APITimeoutError(e)
 
-    # @weave.op()
+    
     def __process_extraction(self, data: List[str]):
         logger.info("Starting batch data extraction process")
         carry_data = None
@@ -253,7 +253,7 @@ class DataExtraction:
         logger.info(f"Batch processing completed. Extracted {len(results)} segments")
         return results
   
-    # @weave.op()
+
     def ingestion_pipeline(self, tag: str, data: List[str]):
         logger.info(f"Starting ingestion pipeline for tag: {tag}")
         tmp_data = self.__process_extraction(data)
@@ -285,7 +285,7 @@ class DataExtraction:
 
         logger.info(f"Ingestion pipeline completed. Processed {len(ingestion_data)} items")
         return ingestion_data
-    # @weave.op()
+    
     def vectordb_data_dump(self, data):
         logger.info(f"Starting vector database dump of {len(data)} items")
         try:

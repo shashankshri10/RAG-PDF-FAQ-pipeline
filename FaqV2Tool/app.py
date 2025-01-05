@@ -4,15 +4,13 @@ import logging
 from typing import List
 from openai import OpenAI
 from pymongo import MongoClient
-# import weave
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 load_dotenv("./.env.shared")
 from envyaml import EnvYAML
 config = EnvYAML("./config.yaml")
 
-# os.environ['WANDB_API_KEY'] = os.getenv("WANDB_API_KEY")
-# weave.init("faq_tool_query")
+
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger()
@@ -22,7 +20,7 @@ openai_client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 class ResponseModel(BaseModel):
     response: str = Field(default_factory=lambda : "",description="Response to user query")
 
-# @weave.op()
+
 def weighted_reciprocal_rank(doc_lists):
     c=60
     weights=[0.50,0.50]
@@ -51,10 +49,10 @@ def weighted_reciprocal_rank(doc_lists):
 
     return sorted_docs
 
-# @weave.op()
+
 def handler(query: str, queryV2: List[str], client_id: str, tag: str):
 
-    # @weave.op()
+    
     def create_embeddings(document: str):
         try:
             response = openai_client.embeddings.create(
@@ -210,7 +208,7 @@ def handler(query: str, queryV2: List[str], client_id: str, tag: str):
 
     return {"RESP": output.choices[0].message.parsed.response, "DOCUMENTS": docs}
 
-# @weave.op()
+
 def query_expansion(text: str):
     from typing import List
     
